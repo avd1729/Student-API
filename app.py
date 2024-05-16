@@ -27,5 +27,14 @@ def create_student():
     return jsonify({"message": "Student created successfully", "student_id": data['_id']}), 201
 
 
+@app.route('/students/<string:student_id>', methods=['GET'])
+def get_student(student_id):
+    student = collection.find_one({"_id": student_id})
+    if student:
+        return jsonify(student), 200
+    else:
+        return jsonify({"message": "Student not found"}), 404
+
+
 if __name__ == '__main__':
     app.run(debug=True)
