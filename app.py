@@ -36,5 +36,14 @@ def get_student(student_id):
         return jsonify({"message": "Student not found"}), 404
 
 
+@app.route('/students', methods=['GET'])
+def get_all_students():
+    students = list(collection.find())
+    # Convert ObjectId to string for JSON serialization
+    for student in students:
+        student['_id'] = str(student['_id'])
+    return jsonify(students), 200
+
+
 if __name__ == '__main__':
     app.run(debug=True)
