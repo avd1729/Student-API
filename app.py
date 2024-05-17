@@ -57,5 +57,23 @@ def delete_student(student_id):
         return jsonify({"message": "Student not found"}), 404
 
 
+@app.route('/students/<string:student_id>', methods=['PUT'])
+def update_student(student_id):
+    try:
+        student_id = ObjectId(student_id)  # Convert string ID to ObjectId
+    except:
+        return jsonify({"message": "Invalid student ID format"}), 400
+
+    data = request.get_json()
+    if not data:
+        return jsonify({"message": "No data provided"}), 400
+
+    update_result = collection.update_one({"_id": student_id}, {"$set": data})
+    if update_result.modified_count > 0:
+        return jsonify({"message": "Student updated successfully"}), 200
+    else:
+        return jsonify({"message": "Student not found"}), 404
+
+
 if __name__ == '__main__':
     app.run(debug=True)
