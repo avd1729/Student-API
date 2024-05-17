@@ -2,7 +2,7 @@ from datetime import datetime
 import os
 from pymongo import MongoClient
 
-connection_string = ""
+connection_string = os.getenv("CONN_STRING")
 client = MongoClient(connection_string)
 
 db = client.sampledb
