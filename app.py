@@ -2,6 +2,8 @@ import os
 from flask import Flask, jsonify, request
 from pymongo import MongoClient
 from bson import ObjectId
+from bson.json_util import dumps
+
 
 app = Flask(__name__)
 
@@ -43,6 +45,16 @@ def get_all_students():
     for student in students:
         student['_id'] = str(student['_id'])
     return jsonify(students), 200
+
+
+@app.route('/students/<string:student_id>', methods=['DELETE'])
+def delete_student(student_id):
+
+    delete_result = collection.delete_one({"_id": student_id})
+    if delete_result.deleted_count > 0:
+        return jsonify({"message": "Student deleted successfully"}), 200
+    else:
+        return jsonify({"message": "Student not found"}), 404
 
 
 if __name__ == '__main__':
