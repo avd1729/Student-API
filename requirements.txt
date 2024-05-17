@@ -1,4 +1,4 @@
-pymongo==3.12.0
-flask==2.1.0
-requests==2.26.0
-bson==0.5.10
+pymongo
+flask
+requests
+PyJWT
