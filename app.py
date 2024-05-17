@@ -75,5 +75,15 @@ def update_student(student_id):
         return jsonify({"message": "Student not found"}), 404
 
 
+# POST operation for login
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.json
+    if data.get('username') == 'admin' and data.get('password') == 'admin':
+        return jsonify({"message": "Login successful"}), 200
+    else:
+        return jsonify({"message": "Invalid credentials"}), 401
+
+
 if __name__ == '__main__':
     app.run(debug=True)
