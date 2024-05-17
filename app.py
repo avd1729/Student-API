@@ -4,7 +4,6 @@ from pymongo import MongoClient
 from bson import ObjectId
 from bson.json_util import dumps
 
-
 app = Flask(__name__)
 
 # Connect to MongoDB
@@ -31,9 +30,10 @@ def create_student():
 
 @app.route('/students/<string:student_id>', methods=['GET'])
 def get_student(student_id):
-    student = collection.find_one({"_id": student_id})
+    student = collection.find_one({"_id": ObjectId(student_id)})
     if student:
-        return jsonify(student), 200
+        json_data = dumps(student)
+        return json_data, 200
     else:
         return jsonify({"message": "Student not found"}), 404
 
@@ -44,11 +44,16 @@ def get_all_students():
     # Convert ObjectId to string for JSON serialization
     for student in students:
         student['_id'] = str(student['_id'])
-    return jsonify(students), 200
+    json_data = dumps(students)
+    return json_data, 200
 
 
 @app.route('/students/<string:student_id>', methods=['DELETE'])
 def delete_student(student_id):
+    try:
+        student_id = ObjectId(student_id)  # Convert string ID to ObjectId
+    except:
+        return jsonify({"message": "Invalid student ID format"}), 400
 
     delete_result = collection.delete_one({"_id": student_id})
     if delete_result.deleted_count > 0:
@@ -74,8 +79,9 @@ def update_student(student_id):
     else:
         return jsonify({"message": "Student not found"}), 404
 
-
 # POST operation for login
+
+
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
