@@ -7,6 +7,8 @@ from bson.json_util import dumps
 app = Flask(__name__)
 
 # Connect to MongoDB
+
+
 connection_string = os.getenv("CONN_STRING")
 client = MongoClient(connection_string)
 db = client.sampledb
@@ -27,6 +29,8 @@ def create_student():
 
     return jsonify({"message": "Student created successfully", "student_id": data['_id']}), 201
 
+# GET operation to get a single Student information
+
 
 @app.route('/students/<string:student_id>', methods=['GET'])
 def get_student(student_id):
@@ -37,6 +41,8 @@ def get_student(student_id):
     else:
         return jsonify({"message": "Student not found"}), 404
 
+# GET operation to get all student information
+
 
 @app.route('/students', methods=['GET'])
 def get_all_students():
@@ -46,6 +52,8 @@ def get_all_students():
         student['_id'] = str(student['_id'])
     json_data = dumps(students)
     return json_data, 200
+
+# DELETE operation to delete a single Student
 
 
 @app.route('/students/<string:student_id>', methods=['DELETE'])
@@ -60,6 +68,8 @@ def delete_student(student_id):
         return jsonify({"message": "Student deleted successfully"}), 200
     else:
         return jsonify({"message": "Student not found"}), 404
+
+# PUT operation to update a single Student information
 
 
 @app.route('/students/<string:student_id>', methods=['PUT'])
