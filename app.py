@@ -21,13 +21,20 @@ collection = db.students
 def create_student():
     data = request.json
 
-    # Generate student ID for new student
-    data['_id'] = str(ObjectId())
+    if not data:
+        return jsonify({"error": "Invalid data"}), 400
 
-    # Insert student data into MongoDB
-    collection.insert_one(data)
+    try:
+        # Generate student ID for new student
+        data['_id'] = ObjectId()
 
-    return jsonify({"message": "Student created successfully", "student_id": data['_id']}), 201
+        # Insert student data into MongoDB
+        collection.insert_one(data)
+
+        return jsonify({"message": "Student created successfully", "student_id": str(data['_id'])}), 201
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # GET operation to get a single Student information
 
