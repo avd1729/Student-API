@@ -7,7 +7,7 @@ from bson.json_util import dumps
 app = Flask(__name__)
 
 # Connect to MongoDB
-connection_string = "mongodb+srv://aravind:LPEhTo88g4rUUaSP@cluster0.ylczfmy.mongodb.net/"
+connection_string = ""
 client = MongoClient(connection_string)
 db = client.sampledb
 collection = db.students
