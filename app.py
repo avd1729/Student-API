@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from pymongo import MongoClient
 from bson import ObjectId
 from bson.json_util import dumps
@@ -7,12 +7,22 @@ from bson.json_util import dumps
 app = Flask(__name__)
 
 # Connect to MongoDB
-
-
-connection_string = os.getenv("CONN_STRING")
+connection_string = "mongodb+srv://aravind:LPEhTo88g4rUUaSP@cluster0.ylczfmy.mongodb.net/"
 client = MongoClient(connection_string)
 db = client.sampledb
 collection = db.students
+
+# Serve static files (HTML, JS)
+
+
+@app.route('/')
+def serve_index():
+    return send_from_directory('static', 'index.html')
+
+
+@app.route('/<path:path>')
+def serve_static(path):
+    return send_from_directory('static', path)
 
 # PUT operation to create Student information
 
@@ -20,19 +30,15 @@ collection = db.students
 @app.route('/students', methods=['PUT'])
 def create_student():
     data = request.json
-
     if not data:
         return jsonify({"error": "Invalid data"}), 400
 
     try:
         # Generate student ID for new student
         data['_id'] = ObjectId()
-
         # Insert student data into MongoDB
         collection.insert_one(data)
-
         return jsonify({"message": "Student created successfully", "student_id": str(data['_id'])}), 201
-
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

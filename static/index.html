@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management</title>
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <h1>Student Management System</h1>
+
+    <h2>Create Student</h2>
+    <form id="create-student-form">
+        <input type="number" id="student-roll-number" placeholder="Roll Number" required>
+        <input type="text" id="student-name" placeholder="Name" required>
+        <input type="date" id="student-dob" placeholder="Date of Birth" required>
+        <input type="text" id="student-class" placeholder="Class" required>
+        <input type="text" id="student-section" placeholder="Section" required>
+        <input type="text" id="student-class-teacher" placeholder="Class Teacher" required>
+        <input type="text" id="student-fee" placeholder="Fee Status" required>
+        <label for="student-active">Active</label>
+        <input type="checkbox" id="student-active">
+        <button type="submit">Create</button>
+    </form>
+
+    <h2>Get Student</h2>
+    <form id="get-student-form">
+        <input type="text" id="get-student-id" placeholder="Student ID" required>
+        <button type="submit">Get</button>
+    </form>
+    <pre id="student-info"></pre>
+
+    <h2>Get All Students</h2>
+    <button id="get-all-students">Get All Students</button>
+    <pre id="all-students-info"></pre>
+
+    <h2>Update Student</h2>
+    <form id="update-student-form">
+        <input type="text" id="update-student-id" placeholder="Student ID" required>
+        <input type="number" id="update-student-roll-number" placeholder="Roll Number" required>
+        <input type="text" id="update-student-name" placeholder="Name" required>
+        <input type="date" id="update-student-dob" placeholder="Date of Birth" required>
+        <input type="text" id="update-student-class" placeholder="Class" required>
+        <input type="text" id="update-student-section" placeholder="Section" required>
+        <input type="text" id="update-student-class-teacher" placeholder="Class Teacher" required>
+        <input type="text" id="update-student-fee" placeholder="Fee Status" required>
+        <label for="update-student-active">Active</label>
+        <input type="checkbox" id="update-student-active">
+        <button type="submit">Update</button>
+    </form>
+
+    <h2>Delete Student</h2>
+    <form id="delete-student-form">
+        <input type="text" id="delete-student-id" placeholder="Student ID" required>
+        <button type="submit">Delete</button>
+    </form>
+
+    <h2>Login</h2>
+    <form id="login-form">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+    <pre id="login-message"></pre>
+</body>
+</html>
