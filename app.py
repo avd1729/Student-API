@@ -12,7 +12,7 @@ client = MongoClient(connection_string)
 db = client.sampledb
 collection = db.students
 
-# Serve static files (HTML, JS)
+# Serve static files (HTML, JS, CSS)
 
 
 @app.route('/')
@@ -34,9 +34,7 @@ def create_student():
         return jsonify({"error": "Invalid data"}), 400
 
     try:
-        # Generate student ID for new student
         data['_id'] = ObjectId()
-        # Insert student data into MongoDB
         collection.insert_one(data)
         return jsonify({"message": "Student created successfully", "student_id": str(data['_id'])}), 201
     except Exception as e:
@@ -60,7 +58,6 @@ def get_student(student_id):
 @app.route('/students', methods=['GET'])
 def get_all_students():
     students = list(collection.find())
-    # Convert ObjectId to string for JSON serialization
     for student in students:
         student['_id'] = str(student['_id'])
     json_data = dumps(students)
@@ -72,7 +69,7 @@ def get_all_students():
 @app.route('/students/<string:student_id>', methods=['DELETE'])
 def delete_student(student_id):
     try:
-        student_id = ObjectId(student_id)  # Convert string ID to ObjectId
+        student_id = ObjectId(student_id)
     except:
         return jsonify({"message": "Invalid student ID format"}), 400
 
@@ -88,7 +85,7 @@ def delete_student(student_id):
 @app.route('/students/<string:student_id>', methods=['PUT'])
 def update_student(student_id):
     try:
-        student_id = ObjectId(student_id)  # Convert string ID to ObjectId
+        student_id = ObjectId(student_id)
     except:
         return jsonify({"message": "Invalid student ID format"}), 400
 
